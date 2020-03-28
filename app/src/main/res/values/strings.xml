@@ -5,4 +5,6 @@
     <string name="edit_phrases">Edit Phrases</string>
     <string name="language_subscription">Language Subscription</string>
     <string name="translate">Translate</string>
+    <string name="button">Button</string>
+    <string name="save">Save</string>
 </resources>
