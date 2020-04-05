@@ -1,12 +1,15 @@
 package com.example.foreignlanguagepractice;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +20,7 @@ public class DisplayPhrases extends AppCompatActivity {
     Button btnDisplayPhrase;
     ListView phraseList;
     public static DatabaseManager phrasesDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,16 +39,27 @@ public class DisplayPhrases extends AppCompatActivity {
             Toast.makeText(DisplayPhrases.this, "Nothing to show", Toast.LENGTH_LONG).show();
         } else {
             while (res.moveToNext()) {
-                String name = res.getString(0);
+                String name = res.getString(1);
                 items.add(name);
-                ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-                phraseList.setAdapter(aa);
-                phraseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> p1, View p2, int i, long p4) {
-                    }
-                });
             }
+            ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items) {
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+
+                    View view = super.getView(position, convertView, parent);
+                    TextView text = (TextView) view.findViewById(android.R.id.text1);
+
+                    text.setTextColor(Color.WHITE);
+
+                    return view;
+                }
+            };
+            phraseList.setAdapter(aa);
+            phraseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> p1, View p2, int i, long p4) {
+                }
+            });
         }
     }
 }

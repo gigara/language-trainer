@@ -2,8 +2,10 @@ package com.example.foreignlanguagepractice;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,13 +27,16 @@ public class EditPhrases extends AppCompatActivity {
     ArrayList<String> selectedItems;
     EditText etEditPhrase;
     Button btnEditPhraseEdit;
+    int selectedPosition = -1;
+    final ArrayList<String> items = new ArrayList<>();
+    final ArrayList<Integer> itemIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_phrases);
         checkList = findViewById(R.id.checkable_list);
-        checkList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        checkList.setChoiceMode(checkList.CHOICE_MODE_SINGLE);
         selectedItems = new ArrayList<String>();
         etEditPhrase = findViewById(R.id.etEditPhrase);
         btnEditPhraseEdit = findViewById(R.id.btnEditPhraseEdit);
@@ -41,47 +46,56 @@ public class EditPhrases extends AppCompatActivity {
 
     public void viewAll() {
         Cursor res = phraseDatabase.getAllData();
-        ArrayList<String> items = new ArrayList<>();
 
         if (res.getCount() == 0) {
             Toast.makeText(EditPhrases.this, "Nothing to show", Toast.LENGTH_LONG).show();
         } else {
             while (res.moveToNext()) {
-                String phrase = res.getString(0);
+                String phrase = res.getString(1);
                 items.add(phrase);
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.checkable_list_layout, R.id.txt_title, items);
-                checkList.setAdapter(arrayAdapter);
-
-
-                checkList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // selected item
-                        String selectedItem = ((TextView) view).getText().toString();
-                        Intent intent = new Intent();
-                        intent.setClass(EditPhrases.this, DisplayPhrases.class);
-                        intent.putExtra("Phrase", selectedItem);
-                        if (selectedItems.contains(selectedItem))
-                            selectedItems.remove(selectedItem);
-                        else
-                            selectedItems.add(selectedItem);
-                    }
-                });
+                int itemId = res.getInt(0);
+                itemIds.add(itemId);
             }
 
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, items) {
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+
+                    View view = super.getView(position, convertView, parent);
+                    TextView text = (TextView) view.findViewById(android.R.id.text1);
+
+                    text.setTextColor(Color.WHITE);
+
+                    return view;
+                }
+            };
+            checkList.setAdapter(arrayAdapter);
+
+            checkList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // selected item
+                    selectedPosition = position;
+                }
+            });
         }
     }
 
-    public void fillFields(View v){
-
+    public void edit(View view) {
+        if (selectedPosition != -1) {
+            etEditPhrase.setText(items.get(selectedPosition));
+        } else {
+            Toast.makeText(EditPhrases.this, "Please Select a Phrase to edit", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void update(View v){
-        boolean isUpdate = phraseDatabase.updateData(
-                etEditPhrase.getText().toString());
-        if (isUpdate == true) {
+        boolean isUpdate = phraseDatabase.updateData(etEditPhrase.getText().toString(), itemIds.get(selectedPosition).toString());
+        if (isUpdate) {
             Toast.makeText(EditPhrases.this, "Updated", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this,DisplayPhrases.class);
+
+            // refresh
+            Intent intent = getIntent();
             finish();
             startActivity(intent);
 
@@ -90,4 +104,5 @@ public class EditPhrases extends AppCompatActivity {
 
         }
     }
+
 }

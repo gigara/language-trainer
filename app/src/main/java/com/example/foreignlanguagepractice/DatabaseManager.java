@@ -8,11 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "Translator.db";
-    public static final String TABLE_NAME = "PhraseList_table";
-    public static final String COL_1 = "Phrase";
+    private static final String DATABASE_NAME = "Translator.db";
+    private static final String TABLE_NAME = "PhraseList_table";
+    private static final String COL_1 = "Phrase";
+    SQLiteDatabase db = this.getWritableDatabase();
 
-    public DatabaseManager(Context context) {
+    DatabaseManager(Context context) {
         super(context, DATABASE_NAME, null, 1);
 
     }
@@ -27,9 +28,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String phrase){
+    boolean insertData(String phrase){
         long result = 0;
-        SQLiteDatabase db = this.getWritableDatabase();
         String Query = "Select * from " + TABLE_NAME + " WHERE Phrase ='" + phrase + "'";
         Cursor cursor = db.rawQuery(Query, null);
         if(cursor.getCount() <= 0){
@@ -47,23 +47,21 @@ public class DatabaseManager extends SQLiteOpenHelper {
             return true;
     }
 
-    public Cursor getAllData(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM "+TABLE_NAME+" ORDER BY Phrase COLLATE NOCASE ",null);
+    Cursor getAllData(){
+        Cursor res = db.rawQuery("SELECT rowid, * FROM "+TABLE_NAME+" ORDER BY Phrase COLLATE NOCASE ",null);
         return res;
     }
 
-    public boolean updateData(String phrase){
+    boolean updateData(String phrase, String id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1,phrase);
 
-        db.update(TABLE_NAME, contentValues, "Phrase = ?",new String[]{phrase});
+        db.update(TABLE_NAME, contentValues, "rowid = ?",new String[]{id});
         return true;
     }
 
     public Cursor search(String phrase){
-        SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE Phrase LIKE "+phrase,null);
         return res;
     }
