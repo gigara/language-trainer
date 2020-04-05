@@ -1,6 +1,5 @@
 package com.example.foreignlanguagepractice;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -43,9 +42,6 @@ public class DisplayPhrases extends AppCompatActivity {
                 phraseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> p1, View p2, int i, long p4) {
-                        Intent intent = new Intent();
-                        finish();
-                        startActivity(intent);
                     }
                 });
             }

@@ -52,4 +52,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("SELECT * FROM "+TABLE_NAME+" ORDER BY Phrase COLLATE NOCASE ",null);
         return res;
     }
+
+    public boolean updateData(String phrase){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1,phrase);
+
+        db.update(TABLE_NAME, contentValues, "Phrase = ?",new String[]{phrase});
+        return true;
+    }
+
+    public Cursor search(String phrase){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE Phrase LIKE "+phrase,null);
+        return res;
+    }
 }
