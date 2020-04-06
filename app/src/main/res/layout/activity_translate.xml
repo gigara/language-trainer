@@ -33,6 +33,7 @@ tools:context=".Translate">
 
     <Button
         android:id="@+id/btnTranslate"
+        android:onClick="translate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/translate"
@@ -41,6 +42,18 @@ tools:context=".Translate">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
         app:layout_constraintVertical_bias="0.859" />
+
+    <Button
+        android:id="@+id/btnPronounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="16dp"
+        android:enabled="false"
+        android:onClick="play"
+        android:text="Pronounce"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/tvTranslate"
