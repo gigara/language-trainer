@@ -83,6 +83,8 @@ public class Translate extends AppCompatActivity {
     }
 
     public void play(View view) {
+        SpeechTask task = new SpeechTask();
+        task.execute();
     }
 
     // TODO: translate the user selected phrase
@@ -139,4 +141,66 @@ public class Translate extends AppCompatActivity {
         }
     }
 
+    // TODO: pronounce the user selected phrase
+    private class SpeechTask extends AsyncTask<String, Void, String> {
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected String doInBackground(String... urls) {
+            String urlString = "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/9e8f04c7-597d-48d2-bb28-625691ed29fe/v1/synthesize";
+
+            String userCredentials = "apikey:xxx";
+            String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
+
+            String jsonInputString = "{\"text\":\""+translatedTxt+"\"}";
+
+            HttpURLConnection urlConnection = null;
+            URL url = null;
+            JSONObject object = null;
+            InputStream inStream = null;
+            OutputStream outStream = null;
+            try {
+                url = new URL(urlString);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestProperty("Authorization", basicAuth);
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+//                urlConnection.setRequestProperty("Accept", "audio/wav");
+
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+                outStream = urlConnection.getOutputStream();
+                byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+                outStream.write(input, 0, input.length);
+
+                inStream = urlConnection.getInputStream();
+
+                // save file
+                File path = new File(getExternalCacheDir(),"ltAudio");
+                if (!path.exists()) {
+                    path.mkdirs();
+                }
+                File file = new File(path, "test.wav");
+                FileOutputStream fileOutput = new FileOutputStream(file);
+
+                byte[] buffer = new byte[1024];
+                int bufferLength = 0;
+
+                while ( (bufferLength = inStream.read(buffer)) > 0 ) {
+                    fileOutput.write(buffer, 0, bufferLength);
+                }
+                fileOutput.close();
+
+//                object = (JSONObject) new JSONTokener(response).nextValue();
+                MediaPlayer mp = new MediaPlayer();
+                mp.setDataSource(getApplicationContext(), Uri.parse("file://"+file.getPath()));
+                mp.prepare();
+                mp.start();
+                return "Ok";
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "Failed to translate";
+        }
+    }
 }
