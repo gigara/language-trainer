@@ -45,8 +45,8 @@ public class LanguageSubscription extends AppCompatActivity {
                 String phrase = res.getString(1);
                 languages.add(phrase);
 
-                int itemId = res.getInt(3);
-                languageSubscriptions.add(itemId);
+                int isSubscribed = res.getInt(3);
+                languageSubscriptions.add(isSubscribed);
             }
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.checkable_list_layout, R.id.txt_title, languages) {

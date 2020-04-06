@@ -2,18 +2,18 @@ package com.example.foreignlanguagepractice;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.AudioManager;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +35,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+
+import static com.example.foreignlanguagepractice.MainActivity.phraseDatabase;
 
 public class Translate extends AppCompatActivity {
 
@@ -42,7 +45,13 @@ public class Translate extends AppCompatActivity {
     private TextView tvTranslate;
     private Button btnPronouce;
     private String translatedTxt;
-    public static DatabaseManager phrasesDatabase;
+    private Spinner langSpinner;
+    public DatabaseManager phrasesDatabase;
+    List<String> phrases = new ArrayList<>();
+    List<String> subscribedLangs = new ArrayList<>();
+    List<String> subscribedLangCodes = new ArrayList<>();
+    String selectedLangCode;
+    String selectedPhrase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +59,48 @@ public class Translate extends AppCompatActivity {
         phrasesDatabase = new DatabaseManager(this);
         setContentView(R.layout.activity_translate);
         phrase = findViewById(R.id.phrase_list);
+        phrase.setChoiceMode(phrase.CHOICE_MODE_SINGLE);
+        langSpinner = findViewById(R.id.lang_spinner);
         tvTranslate = findViewById(R.id.tvTranslate);
         btnPronouce = findViewById(R.id.btnPronounce);
         viewAll();
+        setSpinner();
+    }
+
+    public void setSpinner() {
+        Cursor res = phraseDatabase.getAllLangs();
+
+        if (res.getCount() == 0) {
+            Toast.makeText(Translate.this, "Nothing have subscribed", Toast.LENGTH_LONG).show();
+        } else {
+            while (res.moveToNext()) {
+                String lang = res.getString(1);
+                String langCode = res.getString(2);
+                int isSubscribed = res.getInt(3);
+
+                if (isSubscribed == 1) {
+                    subscribedLangs.add(lang);
+                    subscribedLangCodes.add(langCode);
+                }
+            }
+        }
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, subscribedLangs);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // attaching data adapter
+        langSpinner.setAdapter(dataAdapter);
     }
 
     public void viewAll() {
         Cursor res = phrasesDatabase.getAllData();
-        ArrayList<String> items = new ArrayList<>();
 
         if (res.getCount() == 0) {
             Toast.makeText(Translate.this, "Nothing to show", Toast.LENGTH_LONG).show();
         } else {
             while (res.moveToNext()) {
-                String name = res.getString(0);
-                items.add(name);
-                ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+                String name = res.getString(1);
+                phrases.add(name);
+                ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, phrases);
                 phrase.setAdapter(aa);
                 phrase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -74,10 +109,27 @@ public class Translate extends AppCompatActivity {
                     }
                 });
             }
+            phrase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position,long arg3) {
+                    for (int j = 0; j < parent.getChildCount(); j++) {
+                        parent.getChildAt(j).setSelected(false);
+                        parent.getChildAt(j).setBackgroundColor(Color.TRANSPARENT);
+                    }
+                    selectedPhrase = phrases.get(position);
+                    view.setBackgroundColor(Color.LTGRAY);
+         // Anything
+                }
+            });
         }
     }
 
     public void translate(View view) {
+        if (selectedPhrase == null) {
+            Toast.makeText(Translate.this, "Please select a phrase to translate", Toast.LENGTH_LONG).show();
+            return;
+        }
+        selectedLangCode = subscribedLangCodes.get(langSpinner.getSelectedItemPosition());
         TranslateTask task = new TranslateTask();
         task.execute();
     }
@@ -87,7 +139,6 @@ public class Translate extends AppCompatActivity {
         task.execute();
     }
 
-    // TODO: translate the user selected phrase
     private class TranslateTask extends AsyncTask<String, Void, String> {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
@@ -97,7 +148,7 @@ public class Translate extends AppCompatActivity {
             String userCredentials = "apikey:xxx";
             String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
 
-            String jsonInputString = "{\"text\": \"Hello, world! \", \"model_id\":\"en-es\"}";
+            String jsonInputString = "{\"text\": \""+selectedPhrase+"\", \"model_id\":\"en-"+selectedLangCode+"\"}";
 
             HttpURLConnection urlConnection = null;
             URL url = null;
@@ -141,7 +192,6 @@ public class Translate extends AppCompatActivity {
         }
     }
 
-    // TODO: pronounce the user selected phrase
     private class SpeechTask extends AsyncTask<String, Void, String> {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
