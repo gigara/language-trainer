@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".Translate">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img3"
+    tools:context=".Translate">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -33,9 +34,9 @@ tools:context=".Translate">
 
     <Button
         android:id="@+id/btnTranslate"
-        android:onClick="translate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="translate"
         android:text="@string/translate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,6 +60,7 @@ tools:context=".Translate">
         android:id="@+id/tvTranslate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/btnTranslate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -71,6 +73,7 @@ tools:context=".Translate">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/translate"
+        android:textColor="#FFFFFF"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,6 +86,7 @@ tools:context=".Translate">
         android:layout_height="wrap_content"
         android:layout_marginTop="58dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/btnTranslate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

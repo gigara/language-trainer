@@ -1,6 +1,5 @@
 package com.example.foreignlanguagepractice;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -9,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -85,7 +85,18 @@ public class Translate extends AppCompatActivity {
             }
         }
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, subscribedLangs);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, subscribedLangs) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                View view = super.getView(position, convertView, parent);
+                TextView text = (TextView) view.findViewById(android.R.id.text1);
+
+                text.setTextColor(Color.WHITE);
+
+                return view;
+            }
+        };
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter
         langSpinner.setAdapter(dataAdapter);
@@ -100,25 +111,29 @@ public class Translate extends AppCompatActivity {
             while (res.moveToNext()) {
                 String name = res.getString(1);
                 phrases.add(name);
-                ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, phrases);
-                phrase.setAdapter(aa);
-                phrase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, phrases) {
                     @Override
-                    public void onItemClick(AdapterView<?> p1, View p2, int i, long p4) {
-                        Intent intent = new Intent();
+                    public View getView(int position, View convertView, ViewGroup parent) {
+
+                        View view = super.getView(position, convertView, parent);
+                        TextView text = (TextView) view.findViewById(android.R.id.text1);
+
+                        text.setTextColor(Color.WHITE);
+
+                        return view;
                     }
-                });
+                };
+                phrase.setAdapter(aa);
             }
             phrase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position,long arg3) {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
                     for (int j = 0; j < parent.getChildCount(); j++) {
                         parent.getChildAt(j).setSelected(false);
                         parent.getChildAt(j).setBackgroundColor(Color.TRANSPARENT);
                     }
                     selectedPhrase = phrases.get(position);
                     view.setBackgroundColor(Color.LTGRAY);
-         // Anything
                 }
             });
         }
@@ -145,10 +160,10 @@ public class Translate extends AppCompatActivity {
         protected String doInBackground(String... urls) {
             String urlString = "https://api.us-south.language-translator.watson.cloud.ibm.com/instances/2b084659-4952-4486-a70b-bbeeee671351/v3/translate?version=2018-05-01";
 
-            String userCredentials = "apikey:xxx";
+            String userCredentials = "apikey:mfPUEcD2mBa4oU1m1j5d_H_ECi73M2pN06IW3Vvei7tk";
             String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
 
-            String jsonInputString = "{\"text\": \""+selectedPhrase+"\", \"model_id\":\"en-"+selectedLangCode+"\"}";
+            String jsonInputString = "{\"text\": \"" + selectedPhrase + "\", \"model_id\":\"en-" + selectedLangCode + "\"}";
 
             HttpURLConnection urlConnection = null;
             URL url = null;
@@ -198,10 +213,10 @@ public class Translate extends AppCompatActivity {
         protected String doInBackground(String... urls) {
             String urlString = "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/9e8f04c7-597d-48d2-bb28-625691ed29fe/v1/synthesize";
 
-            String userCredentials = "apikey:xxx";
+            String userCredentials = "apikey:xVxTJsx-cYIblU1O1qr3_iesgGNz-OQwPvailMRxbCo6";
             String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
 
-            String jsonInputString = "{\"text\":\""+translatedTxt+"\"}";
+            String jsonInputString = "{\"text\":\"" + translatedTxt + "\"}";
 
             HttpURLConnection urlConnection = null;
             URL url = null;
@@ -225,7 +240,7 @@ public class Translate extends AppCompatActivity {
                 inStream = urlConnection.getInputStream();
 
                 // save file
-                File path = new File(getExternalCacheDir(),"ltAudio");
+                File path = new File(getExternalCacheDir(), "ltAudio");
                 if (!path.exists()) {
                     path.mkdirs();
                 }
@@ -235,14 +250,14 @@ public class Translate extends AppCompatActivity {
                 byte[] buffer = new byte[1024];
                 int bufferLength = 0;
 
-                while ( (bufferLength = inStream.read(buffer)) > 0 ) {
+                while ((bufferLength = inStream.read(buffer)) > 0) {
                     fileOutput.write(buffer, 0, bufferLength);
                 }
                 fileOutput.close();
 
 //                object = (JSONObject) new JSONTokener(response).nextValue();
                 MediaPlayer mp = new MediaPlayer();
-                mp.setDataSource(getApplicationContext(), Uri.parse("file://"+file.getPath()));
+                mp.setDataSource(getApplicationContext(), Uri.parse("file://" + file.getPath()));
                 mp.prepare();
                 mp.start();
                 return "Ok";
