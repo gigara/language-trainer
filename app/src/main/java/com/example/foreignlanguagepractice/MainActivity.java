@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         Button buttonEditPhrases = findViewById(R.id.buttonEditPhrases);
         Button buttonLanguageSubscription = findViewById(R.id.buttonLanguageSubscription);
         Button buttonTranslate = findViewById(R.id.buttonTranslate);
+        Button buttonOffline = findViewById(R.id.buttonOffline);
 
 
         buttonAddPhrases.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +60,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent startIntent = new Intent(getApplicationContext(), Translate.class);
+                startActivity(startIntent);
+            }
+        });
+
+        buttonOffline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(getApplicationContext(), Offline.class);
                 startActivity(startIntent);
             }
         });

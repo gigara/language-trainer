@@ -21,6 +21,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String PHRASE = "Phrase";
 
     private static final String LANGUAGES_TABLE = "languages";
+    private static final String OFFLINE_TABLE = "offline";
 
     private Context context1;
     private static String DB_NAME = "db";
@@ -51,11 +52,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + PHRASE_LIST_TABLE + " (Phrase TEXT PRIMARY KEY)");
+        db.execSQL("CREATE TABLE " + OFFLINE_TABLE + " (Phrase TEXT, Translation TEXT, Lang TEXT, PRIMARY KEY (Phrase, Translation))");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+ PHRASE_LIST_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+ OFFLINE_TABLE);
         onCreate(db);
     }
 
@@ -95,7 +98,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         myinput.close();
     }
 
-    public void opendatabase() throws SQLException {
+    private void opendatabase() throws SQLException {
         String mypath = DB_PATH + DB_NAME;
         languagesDB = SQLiteDatabase.openDatabase(mypath, null, SQLiteDatabase.OPEN_READWRITE);
     }
@@ -135,6 +138,32 @@ public class DatabaseManager extends SQLiteOpenHelper {
     Cursor getAllLangs() {
         Cursor res = languagesDB.rawQuery("SELECT rowid, * FROM "+ LANGUAGES_TABLE,null);
         return res;
+    }
+
+    Cursor getOfflineData(String lang) {
+        Cursor res = db.rawQuery("SELECT rowid, * FROM "+ OFFLINE_TABLE +" WHERE Lang = '" + lang +"'",null);
+        return res;
+    }
+
+    boolean insertOfflineData(String phrase, String translation, String lang){
+        long result = 0;
+        String Query = "Select * from " + OFFLINE_TABLE + " WHERE Phrase ='" + phrase + "' AND Lang = '"+lang+"'";
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(PHRASE,phrase);
+            contentValues.put("Translation",translation);
+            contentValues.put("Lang",lang);
+
+            db.insert(OFFLINE_TABLE,null,contentValues);
+            result = 1;
+        }
+        cursor.close();
+        if(result==0)
+            return false;
+        else
+            return true;
     }
 
     boolean updateData(String phrase, String id){

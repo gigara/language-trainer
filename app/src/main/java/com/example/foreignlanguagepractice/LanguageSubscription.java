@@ -49,12 +49,12 @@ public class LanguageSubscription extends AppCompatActivity {
                 languageSubscriptions.add(isSubscribed);
             }
 
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.checkable_list_layout, R.id.txt_title, languages) {
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, languages) {
                 @Override
                 public View getView(int position, View convertView, ViewGroup parent) {
 
                     View view = super.getView(position, convertView, parent);
-                    TextView text = (TextView) view.findViewById(R.id.txt_title);
+                    TextView text = (TextView) view.findViewById(android.R.id.text1);
 
                     text.setTextColor(Color.WHITE);
                     return view;

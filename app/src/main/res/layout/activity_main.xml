@@ -12,6 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/main_buttons"
+        android:shadowColor="#D4D4D4"
+        android:shadowDx="-5"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="@string/add_phrases"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -21,12 +25,7 @@
         app:layout_constraintHorizontal_bias="0.544"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.072"
-        android:shadowColor="#D4D4D4"
-        android:shadowDx="-5"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:onClick="startDB"/>
+        app:layout_constraintVertical_bias="0.072" />
 
     <Button
         android:id="@+id/buttonDisplayPhrases"
@@ -73,26 +72,30 @@
         android:layout_width="230dp"
         android:layout_height="62dp"
         android:background="@drawable/main_buttons"
+        android:shadowColor="#D4D4D4"
+        android:shadowDx="-5"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="@string/language_subscription"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.563"
+        app:layout_constraintHorizontal_bias="0.591"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.688"
-        android:shadowColor="#D4D4D4"
-        android:shadowDx="-5"
-        android:shadowDy="0"
-        android:shadowRadius="5"/>
+        app:layout_constraintVertical_bias="0.624" />
 
     <Button
         android:id="@+id/buttonTranslate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/main_buttons"
+        android:shadowColor="#D4D4D4"
+        android:shadowDx="-5"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="@string/translate"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -102,10 +105,26 @@
         app:layout_constraintHorizontal_bias="0.544"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.899"
+        app:layout_constraintVertical_bias="0.778" />
+
+    <Button
+        android:id="@+id/buttonOffline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_buttons"
         android:shadowColor="#D4D4D4"
         android:shadowDx="-5"
         android:shadowDy="0"
-        android:shadowRadius="5"/>
+        android:shadowRadius="5"
+        android:text="@string/offline"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.951" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
