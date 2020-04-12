@@ -4,79 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img3"
-    android:windowSoftInputMode="stateHidden|adjustPan"
+    android:background="@drawable/back"
+    android:backgroundTint="#74367572"
+    android:backgroundTintMode="src_over"
     android:orientation="vertical"
+    android:windowSoftInputMode="stateHidden|adjustPan"
     tools:context=".EditPhrases">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/heading_EP"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/edit_phrases"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <ListView
+        android:id="@+id/checkable_list"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heading_EP"
+        app:layout_constraintVertical_bias="0.142">
+
+    </ListView>
+
+    <EditText
+        android:id="@+id/etEditPhrase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="99dp"
+        android:layout_marginEnd="99dp"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="@string/select_pharse_to_edit"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnEditPhraseSave"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
+            android:onClick="update"
+            android:text="@string/save" />
 
-            <TextView
-                android:id="@+id/heading_EP"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="Edit Phrase"
-                android:textColor="#00FAA6"
-                android:textSize="40sp" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="fill_parent"
-                android:layout_height="400dp">
-
-                <ListView
-                    android:id="@+id/checkable_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </ListView>
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/etEditPhrase"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="center_horizontal"
-                android:hint="Select Pharse"
-                android:inputType="textPersonName"
-                android:textColor="#FFFFFF" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <Button
-                    android:id="@+id/btnEditPhraseSave"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:onClick="update"
-                    android:text="@string/save" />
-
-                <Button
-                    android:id="@+id/btnEditPhraseEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginBottom="40dp"
-                    android:gravity="center"
-                    android:onClick="edit"
-                    android:text="@string/edit_phrase"
-                    android:textColor="#000000" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/btnEditPhraseEdit"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:gravity="center"
+            android:onClick="edit"
+            android:text="@string/edit_phrase"
+            android:textColor="#000000" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

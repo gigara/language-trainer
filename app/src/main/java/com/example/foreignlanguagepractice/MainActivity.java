@@ -16,12 +16,12 @@ public class MainActivity extends AppCompatActivity {
 
         phraseDatabase = new DatabaseManager(this);
 
-        Button buttonAddPhrases = findViewById(R.id.buttonAddPhrases);
-        Button buttonDisplayPhrases = findViewById(R.id.buttonDisplayPhrases);
-        Button buttonEditPhrases = findViewById(R.id.buttonEditPhrases);
-        Button buttonLanguageSubscription = findViewById(R.id.buttonLanguageSubscription);
-        Button buttonTranslate = findViewById(R.id.buttonTranslate);
-        Button buttonOffline = findViewById(R.id.buttonOffline);
+        Button buttonAddPhrases = findViewById(R.id.addPhrases);
+        Button buttonDisplayPhrases = findViewById(R.id.displayPhrases);
+        Button buttonEditPhrases = findViewById(R.id.editPhrases);
+        Button buttonLanguageSubscription = findViewById(R.id.languageSubscription);
+        Button buttonTranslate = findViewById(R.id.translate);
+        Button buttonOffline = findViewById(R.id.offline);
 
 
         buttonAddPhrases.setOnClickListener(new View.OnClickListener() {

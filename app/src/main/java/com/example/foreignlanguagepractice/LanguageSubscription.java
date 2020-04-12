@@ -29,7 +29,7 @@ public class LanguageSubscription extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_language_subscription);
+        setContentView(R.layout.activity_subscription);
         languageList = findViewById(R.id.lang_list);
         languageList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         loadData();

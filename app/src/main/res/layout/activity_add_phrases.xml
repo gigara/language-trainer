@@ -4,35 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddPhrases"
-    android:background="@drawable/img3">
+    android:background="@drawable/back"
+    android:backgroundTint="#73A9A100"
+    android:backgroundTintMode="src_over"
+    tools:context=".AddPhrases">
 
-
-    <Button
-        android:id="@+id/btnAddPhrase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:textColor="#585858"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heading_AP"
-        app:layout_constraintVertical_bias="0.792"
-        android:background="@drawable/regular_buttons"
-        android:textSize="15sp"/>
 
     <TextView
         android:id="@+id/heading_AP"
-        android:layout_width="283dp"
-        android:layout_height="33dp"
+        android:layout_width="288dp"
+        android:layout_height="49dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
         android:text="@string/add_phrases"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
+        android:textColor="#FFFFFF"
+        android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,20 +28,36 @@
         app:layout_constraintVertical_bias="0.156" />
 
     <EditText
-        android:id="@+id/et_Add_phrase"
+        android:id="@+id/add_phrase_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Enter Phrase"
+        android:hint="@string/enter_phrase"
         android:inputType="textPersonName"
         android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btnAddPhrase"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.434"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heading_AP"
         app:layout_constraintVertical_bias="0.32"
-        android:textAppearance="@color/white"
-        android:textSize="20sp"/>
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/btnAddPhrase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/regular_buttons"
+        android:text="@string/save"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heading_AP"
+        app:layout_constraintVertical_bias="0.792" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

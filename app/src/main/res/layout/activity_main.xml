@@ -4,127 +4,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/img1">
+    android:background="@drawable/back"
+    tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/buttonAddPhrases"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/main_buttons"
-        android:shadowColor="#D4D4D4"
-        android:shadowDx="-5"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="@string/add_phrases"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="411dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="301dp"
+        android:text="@string/language_trainer"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.544"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.072" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/buttonDisplayPhrases"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/main_buttons"
-        android:text="@string/display_phrases"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276"
-        android:shadowColor="#D4D4D4"
-        android:shadowDx="-5"
-        android:shadowDy="0"
-        android:shadowRadius="5"/>
+        <Button
+            android:id="@+id/addPhrases"
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_buttons"
+            android:shadowColor="#D4D4D4"
+            android:shadowDx="-5"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/add_phrases"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonEditPhrases"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/main_buttons"
-        android:text="@string/edit_phrases"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.544"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.462"
-        android:shadowColor="#D4D4D4"
-        android:shadowDx="-5"
-        android:shadowDy="0"
-        android:shadowRadius="5"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30sp" />
 
-    <Button
-        android:id="@+id/buttonLanguageSubscription"
-        android:layout_width="230dp"
-        android:layout_height="62dp"
-        android:background="@drawable/main_buttons"
-        android:shadowColor="#D4D4D4"
-        android:shadowDx="-5"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="@string/language_subscription"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.591"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.624" />
+        <Button
+            android:id="@+id/displayPhrases"
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_buttons"
+            android:shadowColor="#D4D4D4"
+            android:shadowDx="-5"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/view_all_phrases"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonTranslate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/main_buttons"
-        android:shadowColor="#D4D4D4"
-        android:shadowDx="-5"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="@string/translate"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.544"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.778" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30sp" />
 
-    <Button
-        android:id="@+id/buttonOffline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/main_buttons"
-        android:shadowColor="#D4D4D4"
-        android:shadowDx="-5"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="@string/offline"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.544"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.951" />
+        <Button
+            android:id="@+id/editPhrases"
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_buttons"
+            android:shadowColor="#D4D4D4"
+            android:shadowDx="-5"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/edit_phrases"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30sp" />
+
+        <Button
+            android:id="@+id/translate"
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_buttons"
+            android:shadowColor="#D4D4D4"
+            android:shadowDx="-5"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/translate"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30sp" />
+
+        <Button
+            android:id="@+id/languageSubscription"
+            android:layout_width="250sp"
+            android:layout_height="62dp"
+            android:background="@drawable/main_buttons"
+            android:shadowColor="#D4D4D4"
+            android:shadowDx="-5"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/language_subscription"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30sp" />
+
+        <Button
+            android:id="@+id/offline"
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_buttons"
+            android:shadowColor="#D4D4D4"
+            android:shadowDx="-5"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/offline"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

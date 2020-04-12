@@ -19,7 +19,7 @@ public class AddPhrases extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_phrases);
 
-        etAddPhrase = findViewById(R.id.et_Add_phrase);
+        etAddPhrase = findViewById(R.id.add_phrase_txt);
         btnAddPhrase = findViewById(R.id.btnAddPhrase);
         addData();
     }
