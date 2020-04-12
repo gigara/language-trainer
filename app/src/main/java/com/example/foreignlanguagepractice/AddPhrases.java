@@ -8,12 +8,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import static com.example.foreignlanguagepractice.MainActivity.phraseDatabase;
 
+/**
+ * add phrases
+ */
 public class AddPhrases extends AppCompatActivity {
-
     EditText etAddPhrase;
     Button btnAddPhrase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +25,7 @@ public class AddPhrases extends AppCompatActivity {
 
         etAddPhrase = findViewById(R.id.add_phrase_txt);
         btnAddPhrase = findViewById(R.id.btnAddPhrase);
-        addData();
-    }
 
-    private void addData() {
         btnAddPhrase.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -41,15 +42,19 @@ public class AddPhrases extends AppCompatActivity {
                             if (i != 1) {
                                 isInserted = phraseDatabase.insertData(etAddPhrase.getText().toString());
                                 if (isInserted) {
-                                    Toast.makeText(AddPhrases.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(AddPhrases.this, "Data Inserted",
+                                            Toast.LENGTH_LONG).show();
                                     etAddPhrase.setText("");
-                                }else
-                                    Toast.makeText(AddPhrases.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                                } else
+                                    Toast.makeText(AddPhrases.this, "Data not Inserted",
+                                            Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(AddPhrases.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                                Toast.makeText(AddPhrases.this, "Data not Inserted",
+                                        Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Toast.makeText(AddPhrases.this, "Empty fields found", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddPhrases.this, "Empty fields found",
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
                 }

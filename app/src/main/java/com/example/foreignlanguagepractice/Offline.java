@@ -1,8 +1,5 @@
 package com.example.foreignlanguagepractice;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -17,6 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -29,7 +29,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -37,13 +36,13 @@ import static com.example.foreignlanguagepractice.MainActivity.phraseDatabase;
 
 public class Offline extends AppCompatActivity {
 
+    public DB phrasesDatabase;
     ListView table;
     Spinner langs;
     List<String> languages = new ArrayList<>();
     List<String> languageCodes = new ArrayList<>();
     List<String> phrases = new ArrayList<>();
     String selectedLangCode;
-    public DatabaseManager phrasesDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +50,9 @@ public class Offline extends AppCompatActivity {
         setContentView(R.layout.activity_offline);
         table = findViewById(R.id.offlineData);
         langs = findViewById(R.id.langs);
-        phrasesDatabase = new DatabaseManager(this);
+        phrasesDatabase = new DB(this);
         table.addHeaderView(getLayoutInflater().inflate(R.layout.table_layout, null, false));
 
-//        loadTable();
         setSpinner();
     }
 

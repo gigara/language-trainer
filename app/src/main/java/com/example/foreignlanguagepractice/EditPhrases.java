@@ -21,30 +21,29 @@ import java.util.ArrayList;
 
 import static com.example.foreignlanguagepractice.MainActivity.phraseDatabase;
 
+/**
+ * edit phrase activity
+ */
 public class EditPhrases extends AppCompatActivity {
-
+    ArrayList<String> items = new ArrayList<>();
+    ArrayList<Integer> itemIds = new ArrayList<>();
     ListView checkList;
     ArrayList<String> selectedItems;
     EditText etEditPhrase;
     Button btnEditPhraseEdit;
-    int selectedPosition = -1;
-    final ArrayList<String> items = new ArrayList<>();
-    final ArrayList<Integer> itemIds = new ArrayList<>();
+    int selectedItem = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_phrases);
         checkList = findViewById(R.id.checkable_list);
-        checkList.setChoiceMode(checkList.CHOICE_MODE_SINGLE);
-        selectedItems = new ArrayList<String>();
         etEditPhrase = findViewById(R.id.etEditPhrase);
         btnEditPhraseEdit = findViewById(R.id.btnEditPhraseEdit);
-        viewAll();
+        checkList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
-    }
+        selectedItems = new ArrayList<>();
 
-    public void viewAll() {
         Cursor res = phraseDatabase.getAllData();
 
         if (res.getCount() == 0) {
@@ -58,43 +57,48 @@ public class EditPhrases extends AppCompatActivity {
                 itemIds.add(itemId);
             }
 
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, items) {
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-
-                    View view = super.getView(position, convertView, parent);
-                    TextView text = (TextView) view.findViewById(android.R.id.text1);
-
-                    text.setTextColor(Color.WHITE);
-
-                    return view;
-                }
-            };
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_single_choice, items);
             checkList.setAdapter(arrayAdapter);
-
             checkList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     // selected item
-                    selectedPosition = position;
+                    selectedItem = position;
                 }
             });
         }
+
     }
 
+    /**
+     * edit the selected phrase
+     * @param view selected phrase
+     */
     public void edit(View view) {
-        if (selectedPosition != -1) {
-            etEditPhrase.setText(items.get(selectedPosition));
+        if (selectedItem != -1) {
+            etEditPhrase.setText(items.get(selectedItem));
         } else {
-            Toast.makeText(EditPhrases.this, "Please Select a Phrase to edit", Toast.LENGTH_LONG).show();
+            Toast.makeText(EditPhrases.this, "Please Select a Phrase to edit",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
+    /**
+     * update & save to the database
+     * @param v text
+     */
     public void update(View v){
-        boolean isUpdate = phraseDatabase.updateData(etEditPhrase.getText().toString(), itemIds.get(selectedPosition).toString());
+        if (selectedItem == -1) {
+            Toast.makeText(EditPhrases.this, "Please Select a Phrase to edit",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        boolean isUpdate = phraseDatabase.updateData(etEditPhrase.getText().toString(),
+                itemIds.get(selectedItem).toString());
         if (isUpdate) {
             Toast.makeText(EditPhrases.this, "Updated", Toast.LENGTH_LONG).show();
 
-            // refresh
+            // refresh the page
             Intent intent = getIntent();
             finish();
             startActivity(intent);

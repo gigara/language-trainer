@@ -49,17 +49,7 @@ public class LanguageSubscription extends AppCompatActivity {
                 languageSubscriptions.add(isSubscribed);
             }
 
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, languages) {
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-
-                    View view = super.getView(position, convertView, parent);
-                    TextView text = (TextView) view.findViewById(android.R.id.text1);
-
-                    text.setTextColor(Color.WHITE);
-                    return view;
-                }
-            };
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, languages);
             languageList.setAdapter(arrayAdapter);
 
             for (int i = 0; i < languageSubscriptions.size(); i++) {
@@ -68,13 +58,6 @@ public class LanguageSubscription extends AppCompatActivity {
                 }
             }
 
-            languageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    // selected item
-//                    selectedPosition = position;
-                }
-            });
         }
     }
 
