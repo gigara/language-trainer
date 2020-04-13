@@ -32,30 +32,29 @@ public class TranslateTask extends AsyncTask<Context, Void, Wrapper> {
 
         String urlString = "https://api.us-south.language-translator.watson.cloud.ibm.com/instances/2b084659-4952-4486-a70b-bbeeee671351/v3/translate?version=2018-05-01";
         String apiKey = "apikey:xxx";
-
         String basicAuth = "Basic " + new String(Base64.getEncoder().encode(apiKey.getBytes()));
 
-        String jsonInputString = "{\"text\": \"" + context.selectedPhrase + "\", \"model_id\":\"en-" + context.selectedLangCode + "\"}";
+        String jsonInputString = "{\"text\": \"" + context.selectedPhrase + "\", \"model_id\":\"en-" + context.selectedLang + "\"}";
 
-        HttpURLConnection urlConnection = null;
+        HttpURLConnection connection = null;
         URL url = null;
         JSONObject object = null;
         InputStream inStream = null;
         OutputStream outStream = null;
         try {
             url = new URL(urlString);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Authorization", basicAuth);
-            urlConnection.setRequestProperty("Content-Type", "application/json");
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Authorization", basicAuth);
+            connection.setRequestProperty("Content-Type", "application/json");
 
-            urlConnection.setDoInput(true);
-            urlConnection.setDoOutput(true);
-            outStream = urlConnection.getOutputStream();
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            outStream = connection.getOutputStream();
             byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
             outStream.write(input, 0, input.length);
 
-            inStream = urlConnection.getInputStream();
+            inStream = connection.getInputStream();
             BufferedReader bReader = new BufferedReader(new InputStreamReader(inStream));
             String temp, response = "";
             while ((temp = bReader.readLine()) != null) {

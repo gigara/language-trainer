@@ -22,6 +22,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
+/**
+ * Play the translated phrase as audio
+ */
 public class SpeechTask extends AsyncTask<Context, Void, String> {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -37,32 +40,32 @@ public class SpeechTask extends AsyncTask<Context, Void, String> {
 
         String jsonInputString = "{\"text\":\"" + context.translatedTxt + "\"}";
 
-        HttpURLConnection urlConnection = null;
+        HttpURLConnection connection = null;
         URL url = null;
         JSONObject object = null;
         InputStream inStream = null;
         OutputStream outStream = null;
         try {
             url = new URL(urlString);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Authorization", basicAuth);
-            urlConnection.setRequestProperty("Content-Type", "application/json");
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Authorization", basicAuth);
+            connection.setRequestProperty("Content-Type", "application/json");
 
-            urlConnection.setDoInput(true);
-            urlConnection.setDoOutput(true);
-            outStream = urlConnection.getOutputStream();
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            outStream = connection.getOutputStream();
             byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
             outStream.write(input, 0, input.length);
 
-            inStream = urlConnection.getInputStream();
+            inStream = connection.getInputStream();
 
-            // save file
-            File path = new File(context.getExternalCacheDir(), "ltAudio");
+            // save file to app dir
+            File path = new File(context.getExternalCacheDir(), "audio");
             if (!path.exists()) {
                 path.mkdirs();
             }
-            File file = new File(path, "test.wav");
+            File file = new File(path, "audio1.wav");
             FileOutputStream fileOutput = new FileOutputStream(file);
 
             byte[] buffer = new byte[1024];
@@ -73,10 +76,11 @@ public class SpeechTask extends AsyncTask<Context, Void, String> {
             }
             fileOutput.close();
 
-            MediaPlayer mp = new MediaPlayer();
-            mp.setDataSource(context, Uri.parse("file://" + file.getPath()));
-            mp.prepare();
-            mp.start();
+            // play the saved file
+            MediaPlayer player = new MediaPlayer();
+            player.setDataSource(context, Uri.parse("file://" + file.getPath()));
+            player.prepare();
+            player.start();
             return "Ok";
 
         } catch (Exception e) {

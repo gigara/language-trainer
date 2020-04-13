@@ -32,9 +32,9 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-import static com.example.foreignlanguagepractice.MainActivity.phraseDatabase;
+import static com.example.foreignlanguagepractice.MainActivity.phrasesDB;
 
-public class Offline extends AppCompatActivity {
+public class Download extends AppCompatActivity {
 
     public DB phrasesDatabase;
     ListView table;
@@ -64,7 +64,7 @@ public class Offline extends AppCompatActivity {
         translations.clear();
 
         if (res.getCount() == 0) {
-            Toast.makeText(Offline.this, "Nothing to show", Toast.LENGTH_LONG).show();
+            Toast.makeText(Download.this, "Nothing to show", Toast.LENGTH_LONG).show();
         } else {
             while (res.moveToNext()) {
                 String phrase = res.getString(1);
@@ -98,11 +98,11 @@ public class Offline extends AppCompatActivity {
 
 
     public void setSpinner() {
-        Cursor langs1 = phraseDatabase.getAllLangs();
-        Cursor phrases1 = phraseDatabase.getAllData();
+        Cursor langs1 = phrasesDB.getAllLangs();
+        Cursor phrases1 = phrasesDB.getAllData();
 
         if (langs1.getCount() == 0) {
-            Toast.makeText(Offline.this, "No languages found", Toast.LENGTH_LONG).show();
+            Toast.makeText(Download.this, "No languages found", Toast.LENGTH_LONG).show();
         } else {
             while (langs1.moveToNext()) {
                 String lang = langs1.getString(1);
@@ -112,7 +112,7 @@ public class Offline extends AppCompatActivity {
             }
 
             if (phrases1.getCount() == 0) {
-                Toast.makeText(Offline.this, "No languages found", Toast.LENGTH_LONG).show();
+                Toast.makeText(Download.this, "No languages found", Toast.LENGTH_LONG).show();
             } else {
                 while (phrases1.moveToNext()) {
                     String phrase = phrases1.getString(1);

@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.example.foreignlanguagepractice.MainActivity.phraseDatabase;
+import static com.example.foreignlanguagepractice.MainActivity.phrasesDB;
 
 /**
  * add phrases
@@ -31,7 +31,7 @@ public class AddPhrases extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if (!(etAddPhrase.getText().toString().equals(""))) {
-                            Cursor res = phraseDatabase.getAllData();
+                            Cursor res = phrasesDB.getAllData();
                             int i = 0;
                             while (res.moveToNext()) {
                                 if (res.getString(0).equals(etAddPhrase.toString())) {
@@ -40,20 +40,20 @@ public class AddPhrases extends AppCompatActivity {
                             }
                             boolean isInserted;
                             if (i != 1) {
-                                isInserted = phraseDatabase.insertData(etAddPhrase.getText().toString());
+                                isInserted = phrasesDB.insertData(etAddPhrase.getText().toString());
                                 if (isInserted) {
-                                    Toast.makeText(AddPhrases.this, "Data Inserted",
+                                    Toast.makeText(AddPhrases.this, "Phrase Inserted",
                                             Toast.LENGTH_LONG).show();
                                     etAddPhrase.setText("");
                                 } else
-                                    Toast.makeText(AddPhrases.this, "Data not Inserted",
+                                    Toast.makeText(AddPhrases.this, "Phrase already exists",
                                             Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(AddPhrases.this, "Data not Inserted",
+                                Toast.makeText(AddPhrases.this, "Error!",
                                         Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Toast.makeText(AddPhrases.this, "Empty fields found",
+                            Toast.makeText(AddPhrases.this, "Please fill all the fields",
                                     Toast.LENGTH_LONG).show();
                         }
                     }

@@ -7,7 +7,7 @@
     android:background="@drawable/back"
     android:backgroundTint="#749B0606"
     android:backgroundTintMode="src_over "
-    tools:context=".LanguageSubscription">
+    tools:context=".Subscriptions">
 
     <TextView
         android:id="@+id/textView"

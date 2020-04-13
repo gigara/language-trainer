@@ -22,7 +22,7 @@ import com.example.foreignlanguagepractice.api.TranslateTask;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.foreignlanguagepractice.MainActivity.phraseDatabase;
+import static com.example.foreignlanguagepractice.MainActivity.phrasesDB;
 
 public class Translate extends AppCompatActivity {
 
@@ -34,7 +34,7 @@ public class Translate extends AppCompatActivity {
     List<String> phrases = new ArrayList<>();
     List<String> subscribedLangs = new ArrayList<>();
     List<String> subscribedLangCodes = new ArrayList<>();
-    public String selectedLangCode;
+    public String selectedLang;
     public String selectedPhrase;
 
     @Override
@@ -55,7 +55,7 @@ public class Translate extends AppCompatActivity {
             while (res.moveToNext()) {
                 String name = res.getString(1);
                 phrases.add(name);
-                ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, phrases) {
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, phrases) {
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -67,7 +67,7 @@ public class Translate extends AppCompatActivity {
                         return view;
                     }
                 };
-                phrase.setAdapter(aa);
+                phrase.setAdapter(arrayAdapter);
             }
             phrase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -86,7 +86,7 @@ public class Translate extends AppCompatActivity {
     }
 
     public void setSpinner() {
-        Cursor res = phraseDatabase.getAllLangs();
+        Cursor res = phrasesDB.getAllLangs();
 
         if (res.getCount() == 0) {
             Toast.makeText(Translate.this, "Nothing have subscribed", Toast.LENGTH_LONG).show();
@@ -118,7 +118,7 @@ public class Translate extends AppCompatActivity {
             Toast.makeText(Translate.this, "Please select a phrase to translate", Toast.LENGTH_LONG).show();
             return;
         }
-        selectedLangCode = subscribedLangCodes.get(langSpinner.getSelectedItemPosition());
+        selectedLang = subscribedLangCodes.get(langSpinner.getSelectedItemPosition());
         TranslateTask task = new TranslateTask();
         task.execute(this);
     }

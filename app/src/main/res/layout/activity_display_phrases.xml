@@ -7,7 +7,7 @@
     android:background="@drawable/back"
     android:backgroundTint="#7F2E9234"
     android:backgroundTintMode="src_over"
-    tools:context=".DisplayPhrases">
+    tools:context=".ViewAll">
 
     <TextView
         android:id="@+id/heading_DP"
@@ -38,7 +38,7 @@
     </ListView>
 
     <Button
-        android:id="@+id/btnDisplayPhrase"
+        android:id="@+id/btnDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/regular_buttons"

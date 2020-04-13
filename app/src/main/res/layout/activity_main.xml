@@ -105,7 +105,7 @@
             android:layout_height="30sp" />
 
         <Button
-            android:id="@+id/languageSubscription"
+            android:id="@+id/subscriptions"
             android:layout_width="250sp"
             android:layout_height="62dp"
             android:background="@drawable/main_buttons"
@@ -123,7 +123,7 @@
             android:layout_height="30sp" />
 
         <Button
-            android:id="@+id/offline"
+            android:id="@+id/downloads"
             android:layout_width="250sp"
             android:layout_height="wrap_content"
             android:background="@drawable/main_buttons"

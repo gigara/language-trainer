@@ -2,24 +2,21 @@ package com.example.foreignlanguagepractice;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-import static com.example.foreignlanguagepractice.MainActivity.phraseDatabase;
+import static com.example.foreignlanguagepractice.MainActivity.phrasesDB;
 
 /**
  * edit phrase activity
@@ -44,7 +41,7 @@ public class EditPhrases extends AppCompatActivity {
 
         selectedItems = new ArrayList<>();
 
-        Cursor res = phraseDatabase.getAllData();
+        Cursor res = phrasesDB.getAllData();
 
         if (res.getCount() == 0) {
             Toast.makeText(EditPhrases.this, "Nothing to show", Toast.LENGTH_LONG).show();
@@ -93,7 +90,7 @@ public class EditPhrases extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
             return;
         }
-        boolean isUpdate = phraseDatabase.updateData(etEditPhrase.getText().toString(),
+        boolean isUpdate = phrasesDB.updateData(etEditPhrase.getText().toString(),
                 itemIds.get(selectedItem).toString());
         if (isUpdate) {
             Toast.makeText(EditPhrases.this, "Updated", Toast.LENGTH_LONG).show();

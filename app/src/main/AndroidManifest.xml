@@ -13,12 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Offline"></activity>
+        <activity android:name=".Download"></activity>
         <activity android:name=".AddPhrases" />
         <activity android:name=".Translate" />
-        <activity android:name=".LanguageSubscription" />
+        <activity android:name=".Subscriptions" />
         <activity android:name=".EditPhrases" />
-        <activity android:name=".DisplayPhrases" />
+        <activity android:name=".ViewAll" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

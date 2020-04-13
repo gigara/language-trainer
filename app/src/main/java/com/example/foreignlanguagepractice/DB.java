@@ -19,12 +19,12 @@ import java.io.OutputStream;
  */
 public class DB extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "Translator.db";
-    private static final String PHRASE_LIST_TABLE = "PhraseList_table";
+    private static final String DB_NAME = "Translator.db";
+    private static final String OFFLINE_DB_NAME = "db";
+    private static final String PHRASES_TABLE = "PhraseList_table";
     private static final String PHRASE = "Phrase";
     private static final String LANGUAGES_TABLE = "languages";
     private static final String OFFLINE_TABLE = "offline";
-    private static String DB_NAME = "db";
     private static String DB_PATH;
     private Context context1;
     private SQLiteDatabase languagesDB;
@@ -33,43 +33,44 @@ public class DB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + PHRASE_LIST_TABLE + " (Phrase TEXT PRIMARY KEY)");
+        db.execSQL("CREATE TABLE " + PHRASES_TABLE + " (Phrase TEXT PRIMARY KEY)");
         db.execSQL("CREATE TABLE " + OFFLINE_TABLE + " (Phrase TEXT, Translation TEXT, Lang TEXT, " +
                 "PRIMARY KEY (Phrase, Translation))");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + PHRASE_LIST_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + PHRASES_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + OFFLINE_TABLE);
         onCreate(db);
     }
 
     DB(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DB_NAME, null, 1);
         context1 = context;
         DB_PATH = context1.getExternalFilesDir(null).getPath() + "/";
 
-        boolean dbexist = checkdatabase();
+        boolean dbexist = checkDatabase();
         if (dbexist) {
             System.out.println(" Database exists.");
         } else {
             this.getReadableDatabase();
             try {
-                copydatabase();
+                // copy the database to external storage
+                copyDatabase();
 
             } catch (IOException e) {
                 throw new Error("Error copying database");
             }
         }
-        opendatabase();
+        openDatabase();
     }
 
-    private boolean checkdatabase() {
+    private boolean checkDatabase() {
 
         boolean checkdb = false;
         try {
-            String myPath = DB_PATH + DB_NAME;
+            String myPath = DB_PATH + OFFLINE_DB_NAME;
             File dbfile = new File(myPath);
             checkdb = dbfile.exists();
         } catch (SQLiteException e) {
@@ -82,44 +83,44 @@ public class DB extends SQLiteOpenHelper {
      * copy prebuilt database to the external storage
      * @throws IOException
      */
-    private void copydatabase() throws IOException {
+    private void copyDatabase() throws IOException {
         //Open local db as the input stream
-        InputStream myinput = context1.getAssets().open(DB_NAME);
+        InputStream myinput = context1.getAssets().open(OFFLINE_DB_NAME);
 
         // Path to the just created empty db
-        String outfilename = DB_PATH + DB_NAME;
+        String outfilename = DB_PATH + OFFLINE_DB_NAME;
 
         //Open the empty db as the output stream
-        OutputStream myoutput = new FileOutputStream(outfilename);
+        OutputStream fileOutputStream = new FileOutputStream(outfilename);
 
-        // transfer byte to inputfile to outputfile
+        // transfer byte to output file
         byte[] buffer = new byte[1024];
         int length;
         while ((length = myinput.read(buffer)) > 0) {
-            myoutput.write(buffer, 0, length);
+            fileOutputStream.write(buffer, 0, length);
         }
 
         //Close the streams
-        myoutput.flush();
-        myoutput.close();
+        fileOutputStream.flush();
+        fileOutputStream.close();
         myinput.close();
     }
 
-    private void opendatabase() throws SQLException {
-        String mypath = DB_PATH + DB_NAME;
+    private void openDatabase() throws SQLException {
+        String mypath = DB_PATH + OFFLINE_DB_NAME;
         languagesDB = SQLiteDatabase.openDatabase(mypath, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
     boolean insertData(String phrase) {
         long result = 0;
-        String Query = "Select * from " + PHRASE_LIST_TABLE + " WHERE Phrase ='" + phrase + "'";
+        String Query = "Select * from " + PHRASES_TABLE + " WHERE Phrase ='" + phrase + "'";
         Cursor cursor = db.rawQuery(Query, null);
         if (cursor.getCount() <= 0) {
             cursor.close();
             ContentValues contentValues = new ContentValues();
             contentValues.put(PHRASE, phrase);
 
-            db.insert(PHRASE_LIST_TABLE, null, contentValues);
+            db.insert(PHRASES_TABLE, null, contentValues);
             result = 1;
         }
         cursor.close();
@@ -140,14 +141,14 @@ public class DB extends SQLiteOpenHelper {
 
     boolean updateData(String phrase, String id) {
         long result = 0;
-        String Query = "Select * from " + PHRASE_LIST_TABLE + " WHERE Phrase ='" + phrase + "'";
+        String Query = "Select * from " + PHRASES_TABLE + " WHERE Phrase ='" + phrase + "'";
         Cursor cursor = db.rawQuery(Query, null);
         if (cursor.getCount() <= 0) {
             cursor.close();
             ContentValues contentValues = new ContentValues();
             contentValues.put(PHRASE, phrase);
 
-            db.update(PHRASE_LIST_TABLE, contentValues, "rowid = ?", new String[]{id});
+            db.update(PHRASES_TABLE, contentValues, "rowid = ?", new String[]{id});
             result = 1;
         }
 
@@ -157,7 +158,7 @@ public class DB extends SQLiteOpenHelper {
 
     // external storage database methods
     Cursor getAllData() {
-        Cursor res = db.rawQuery("SELECT rowid, * FROM " + PHRASE_LIST_TABLE +
+        Cursor res = db.rawQuery("SELECT rowid, * FROM " + PHRASES_TABLE +
                 " ORDER BY Phrase COLLATE NOCASE ", null);
         return res;
     }

@@ -7,7 +7,7 @@
     android:background="@drawable/back"
     android:backgroundTint="#9A9D7F7F"
     android:backgroundTintMode="src_over"
-    tools:context=".Offline">
+    tools:context=".Download">
 
     <TextView
         android:id="@+id/textView3"

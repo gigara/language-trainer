@@ -8,23 +8,23 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    public static DB phraseDatabase;
+    public static DB phrasesDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        phraseDatabase = new DB(this);
+        phrasesDB = new DB(this);
 
-        Button buttonAddPhrases = findViewById(R.id.addPhrases);
-        Button buttonDisplayPhrases = findViewById(R.id.displayPhrases);
-        Button buttonEditPhrases = findViewById(R.id.editPhrases);
-        Button buttonLanguageSubscription = findViewById(R.id.languageSubscription);
-        Button buttonTranslate = findViewById(R.id.translate);
-        Button buttonOffline = findViewById(R.id.offline);
+        Button btnAddPhrases = findViewById(R.id.addPhrases);
+        Button btnDisplayPhrases = findViewById(R.id.displayPhrases);
+        Button btnEditPhrases = findViewById(R.id.editPhrases);
+        Button btnLanguageSubscription = findViewById(R.id.subscriptions);
+        Button btnTranslate = findViewById(R.id.translate);
+        Button btnOffline = findViewById(R.id.downloads);
 
 
-        buttonAddPhrases.setOnClickListener(new View.OnClickListener() {
+        btnAddPhrases.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startIntent = new Intent(getApplicationContext(), AddPhrases.class);
@@ -32,15 +32,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonDisplayPhrases.setOnClickListener(new View.OnClickListener() {
+        btnDisplayPhrases.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startIntent = new Intent(getApplicationContext(), DisplayPhrases.class);
+                Intent startIntent = new Intent(getApplicationContext(), ViewAll.class);
                 startActivity(startIntent);
             }
         });
 
-        buttonEditPhrases.setOnClickListener(new View.OnClickListener() {
+        btnEditPhrases.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startIntent = new Intent(getApplicationContext(), EditPhrases.class);
@@ -48,15 +48,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonLanguageSubscription.setOnClickListener(new View.OnClickListener() {
+        btnLanguageSubscription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startIntent = new Intent(getApplicationContext(), LanguageSubscription.class);
+                Intent startIntent = new Intent(getApplicationContext(), Subscriptions.class);
                 startActivity(startIntent);
             }
         });
 
-        buttonTranslate.setOnClickListener(new View.OnClickListener() {
+        btnTranslate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startIntent = new Intent(getApplicationContext(), Translate.class);
@@ -64,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonOffline.setOnClickListener(new View.OnClickListener() {
+        btnOffline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startIntent = new Intent(getApplicationContext(), Offline.class);
+                Intent startIntent = new Intent(getApplicationContext(), Download.class);
                 startActivity(startIntent);
             }
         });
