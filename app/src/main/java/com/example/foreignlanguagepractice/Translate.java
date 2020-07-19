@@ -160,7 +160,7 @@ public class Translate extends AppCompatActivity {
         protected String doInBackground(String... urls) {
             String urlString = "https://api.us-south.language-translator.watson.cloud.ibm.com/instances/2b084659-4952-4486-a70b-bbeeee671351/v3/translate?version=2018-05-01";
 
-            String userCredentials = "apikey:mfPUEcD2mBa4oU1m1j5d_H_ECi73M2pN06IW3Vvei7tk";
+            String userCredentials = "apikey:x";
             String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
 
             String jsonInputString = "{\"text\": \"" + selectedPhrase + "\", \"model_id\":\"en-" + selectedLangCode + "\"}";
@@ -213,7 +213,7 @@ public class Translate extends AppCompatActivity {
         protected String doInBackground(String... urls) {
             String urlString = "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/9e8f04c7-597d-48d2-bb28-625691ed29fe/v1/synthesize";
 
-            String userCredentials = "apikey:xVxTJsx-cYIblU1O1qr3_iesgGNz-OQwPvailMRxbCo6";
+            String userCredentials = "apikey:x";
             String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
 
             String jsonInputString = "{\"text\":\"" + translatedTxt + "\"}";
